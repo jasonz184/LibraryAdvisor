@@ -1,95 +1,68 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Main
 {
-    private static String period;
-    private static String room;
-    private static String timeleft;
     public static void main(String[] args)
     {
+        String period;
+        String room;
+        String timeLeft;
         Scanner s = new Scanner(System.in);
-        System.out.println("What period are you planning to go to the library?");
+        ValidChecks check = new ValidChecks();
+        ArrayList<Period> periods = new ArrayList<Period>();
+        periods.add(new Period(1, "8:05", "8:46"));
+        periods.add(new Period(2, "8:50", "9:31"));
+        periods.add(new Period(3, "9:35", "10:19"));
+        periods.add(new Period(4, "10:23", "11:04"));
+        periods.add(new Period(5, "11:08", "11:49"));
+        periods.add(new Period(6, "11:53", "12:34"));
+        periods.add(new Period(7, "12:38", "1:19"));
+        periods.add(new Period(8, "1:23", "2:04"));
+        periods.add(new Period(9, "2:08", "2:49"));
+        periods.add(new Period(10, "2:53", "3:34"));
+
+        System.out.println("What period are you planning to go to the library? Periods 1 - 10");
         period = s.nextLine();
-        System.out.println(vaildPeriod(period));
-        while(!vaildPeriod(period))
+        while(!check.vaildPeriod(period))
         {
-            System.out.println("Enter a vaild period.");
+            System.out.println("Enter a vaild period. (1 - 10)");
             period = s.nextLine();
-            System.out.println(vaildPeriod(period));
         }
         if(period.compareTo("3") == 0)
         {
             System.out.println("The library is always closed.");
             System.exit(0);
         }
-
-        System.out.println("What time are you leaving?");
+        Period p = new Period(check.getPeriod());       //Makes a period class with a vaild period number
+        
+        System.out.println("What time are you leaving? Enter in the following format with no spaces: HH:MM");
+        timeLeft = s.nextLine();
+        while(!check.vaildTime(timeLeft))
+        {
+            System.out.println("Enter a valid time. (HH:MM)");
+            timeLeft = s.nextLine();
+        }
+        p.timeLeft(timeLeft);       //Set the time to a vaild time
+        if(check.getHour() <= 12)   //Non military time input prompts an am or pm check
+        {
+            System.out.println("AM or PM");
+            String input = s.nextLine();
+            while(!(input.equalsIgnoreCase("am")) && !(input.equalsIgnoreCase("pm")))
+            {
+                System.out.println("Enter AM or PM");
+                input = s.nextLine();
+            }
+        }
 
         System.out.println("What room are you coming from? Enter in the following format with no spaces: FloorSideNumber");
         room = s.nextLine();
-        System.out.println(validRoom(room));
-        while(!validRoom(room))
+        while(!check.validRoom(room))
         {
             System.out.println("Must be a vaild room. (FloorSideNumber)");
             room = s.nextLine();
-            System.out.println(validRoom(room));
         }
         s.close();
     }
 
-    public static boolean vaildPeriod(String period)
-    {
-        int temp;
-        try {
-            temp = Integer.parseInt(period);
-        } catch (Exception e) {
-            return false;
-        }
-        return temp >= 1 && temp <= 10;
-    }
-
-    /*public static boolean vaildTime(String time)
-    {
-
-    }*/
-
-    public static boolean validRoom(String room) //need to think about center stuff, maybe
-    {
-        if(!(room.length() == 3) && !(room.length() == 4)) return false;
-        String first = room.substring(0, 1); //7th floor (lunchroom)  defined using standard notation for easy calculation
-        String second = room.substring(1, 2);
-        String end = room.substring(2);
-        int floor;
-        int num;
-        boolean vaildSide = false;
-        boolean vaildNum = false;
-        if((first.equalsIgnoreCase("b")))
-        {
-            
-            first = "0";
-        }
-        try {
-            floor = Integer.parseInt(first);
-            num = Integer.parseInt(end);
-        } catch (Exception e) {
-            System.out.println("bad");
-            return false;
-        }
-        if(second.equalsIgnoreCase("n"))
-        {
-            vaildSide = true;
-            vaildNum = num >= 1 && num <= 8;
-        }
-        else if(second.equalsIgnoreCase("e") || second.equalsIgnoreCase("w"))
-        {
-            vaildSide = true;
-            vaildNum = num >= 1 && num <= 26;
-        }
-        else if(second.equalsIgnoreCase("s"))
-        {
-            vaildSide = true;
-            vaildNum = num >= 1 && num <= 13;
-        }
-        return floor >= 0 && floor <= 9 && vaildSide && vaildNum;
-    }
 }
