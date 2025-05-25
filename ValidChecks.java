@@ -1,44 +1,46 @@
 public class ValidChecks 
 {
-    private int period;
-    private int hour;
-    private String room;
+    private static int period;
+    private static int hour;
+    private static int minute;
+    private static String room;
 
-    public boolean vaildPeriod(String period)
+    public static boolean vaildPeriod(String p)
     {
         int num;
         try {
-            num = Integer.parseInt(period);
+            num = Integer.parseInt(p);
         } catch (Exception e) {
             return false;
         }
-        this.period = num;
+        period = num;
         return num >= 1 && num <= 10;
     }
     
-    public boolean vaildTime(String time)
+    public static boolean vaildTime(String t)
     {
-        if(!(time.length() == 5)) return false;
-        String first = time.substring(0, 2);
-        String second = time.substring(3);
-        int hour;
-        int minute;
+        if(!(t.length() == 5)) return false;
+        String first = t.substring(0, 2);
+        String second = t.substring(3);
+        int hours;
+        int minutes;
         try {
-            hour = Integer.parseInt(first);
-            minute = Integer.parseInt(second);
+            hours = Integer.parseInt(first);
+            minutes = Integer.parseInt(second);
         } catch (Exception e) {
             return false;
         }
-        this.hour = hour;
-        return (hour >= 0 && hour <= 24) && (minute >= 0 && minute <= 59);
+        hour = hours;
+        minute = minutes;
+        return (hours >= 0 && hours <= 24) && (minutes >= 0 && minutes <= 59);
     }
 
-    public boolean validRoom(String room) //need to think about center stuff, maybe
+    public static boolean validRoom(String r) //need to think about center stuff, maybe
     {
-        if(!(room.length() == 3) && !(room.length() == 4)) return false;
-        String first = room.substring(0, 1); //7th floor (lunchroom)  defined using standard notation for easy calculation
-        String second = room.substring(1, 2);
-        String end = room.substring(2);
+        if(!(r.length() == 3) && !(r.length() == 4)) return false;
+        String first = r.substring(0, 1); //7th floor (lunchroom)  defined using standard notation for easy calculation
+        String second = r.substring(1, 2);
+        String end = r.substring(2);
         int floor;
         int num;
         boolean vaildSide = false;
@@ -69,21 +71,31 @@ public class ValidChecks
             vaildSide = true;
             vaildNum = num >= 1 && num <= 13;
         }
-        this.room = floor + second + num;
+        room = floor + second + num;
         return floor >= 0 && floor <= 9 && vaildSide && vaildNum;
     }
 
-    public int getPeriod()
+    public static int getPeriod()
     {
         return period;
     }
 
-    public int getHour()
+    public static void setHour(int h)
+    {
+        hour = h;
+    }
+
+    public static int getHour()
     {
         return hour;
     }
 
-    public String getRoom()
+    public static int getMinute()
+    {
+        return minute;
+    }
+
+    public static String getRoom()
     {
         return room;
     }
