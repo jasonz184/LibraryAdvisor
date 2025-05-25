@@ -29,7 +29,8 @@ public class Period
             earliest = 450;         //7:30 in minutes
             latest = 490;           //8:10 in minutes
             if(leaveMins < earliest) System.out.println("School isn't even open yet...");
-            if(leaveMins > latest) System.out.println("Leaving way too late. There's no way your getting in...");
+            if(leaveMins > latest && leaveMins > 1050) System.out.println("Schools already closed...");
+            else if(leaveMins > latest) System.out.println("Leaving way too late. There's no way your getting in...");
             return leaveMins >= earliest && leaveMins <= latest;
         }
         else
@@ -44,7 +45,8 @@ public class Period
             if(ValidChecks.getPeriod() > 6 && ValidChecks.getHour() < 12) latest += 12 * 60;
             if(leaveMins < earliest && leaveMins < 450) System.out.println("School isn't even open yet...");
             else if(leaveMins < earliest) System.out.println("Leaving that early is a bit suspicious...");
-            if(leaveMins > latest) System.out.println("Leaving way too late. There's no way your getting in...");
+            if(leaveMins > latest && leaveMins > 1050) System.out.println("Schools already closed...");
+            else if(leaveMins > latest) System.out.println("Leaving way too late. There's no way your getting in...");
             return leaveMins >= earliest && leaveMins <= latest;
         } 
     }

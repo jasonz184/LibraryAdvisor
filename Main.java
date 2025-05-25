@@ -68,11 +68,29 @@ public class Main
 
         System.out.println("What room are you coming from? Enter in the following format with no spaces: FloorSideNumber");
         room = s.nextLine();
-        while(!ValidChecks.validRoom(room))
+        while(!ValidChecks.validRoom(room) && !room.equalsIgnoreCase("lunchroom") && !room.equalsIgnoreCase("center"))
         {
             System.out.println("Must be a vaild room. (FloorSideNumber)");
             room = s.nextLine();
         }
+        if(room.equalsIgnoreCase("lunchroom"))
+        {
+            System.out.println("Which side are you on? Enter one of the following: NW, CW, SW, C, NE, CE, SE");
+            room = s.nextLine();
+            while(!room.equalsIgnoreCase("nw") && !room.equalsIgnoreCase("cw") && !room.equalsIgnoreCase("sw") && !room.equalsIgnoreCase("c") && !room.equalsIgnoreCase("ne") && !room.equalsIgnoreCase("ce") &&!room.equalsIgnoreCase("se"))
+            {
+                System.out.println("Please enter either NW, CW, SW, C, NE, CE, or SE");
+                room = s.nextLine();
+            }
+        }
+        else if(room.equalsIgnoreCase("center"))
+        {
+            System.out.println("Which floor?");
+            
+        }
+
+
+
         s.close();
     }
 

@@ -3,7 +3,9 @@ public class ValidChecks
     private static int period;
     private static int hour;
     private static int minute;
-    private static String room;
+    private static int floor;
+    private static String side;
+    private static int number;
 
     public static boolean vaildPeriod(String p)
     {
@@ -41,7 +43,7 @@ public class ValidChecks
         String first = r.substring(0, 1); //7th floor (lunchroom)  defined using standard notation for easy calculation
         String second = r.substring(1, 2);
         String end = r.substring(2);
-        int floor;
+        int fl;
         int num;
         boolean vaildSide = false;
         boolean vaildNum = false;
@@ -51,7 +53,7 @@ public class ValidChecks
             first = "0";
         }
         try {
-            floor = Integer.parseInt(first);
+            fl = Integer.parseInt(first);
             num = Integer.parseInt(end);
         } catch (Exception e) {
             return false;
@@ -71,8 +73,10 @@ public class ValidChecks
             vaildSide = true;
             vaildNum = num >= 1 && num <= 13;
         }
-        room = floor + second + num;
-        return floor >= 0 && floor <= 9 && vaildSide && vaildNum;
+        floor = fl;
+        side = second;
+        number = num; 
+        return fl >= 0 && fl <= 9 && vaildSide && vaildNum;
     }
 
     public static int getPeriod()
@@ -95,8 +99,18 @@ public class ValidChecks
         return minute;
     }
 
-    public static String getRoom()
+    public static int getFloor()
     {
-        return room;
+        return floor;
+    }
+
+    public static String getSide()
+    {
+        return side;
+    }
+    
+    public static int getNumber()
+    {
+        return number;
     }
 }
