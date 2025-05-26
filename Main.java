@@ -22,6 +22,8 @@ public class Main
         periods.add(new Period(10, "02:53", "03:34"));
 
         Period temp = new Period(0);
+        System.out.println("Period  Start      End");
+        for(Period p : periods) System.out.println(p);
         System.out.println("What period are you planning to go to the library? Periods 1 - 10");
         period = s.nextLine();
         while(!temp.vaildPeriod(period))
@@ -69,10 +71,15 @@ public class Main
         Room temp3 = new Room(0, null, 0);
         System.out.println("What room are you coming from? Enter in the following format with no spaces: FloorSideNumber");
         room = s.nextLine();
-        while(!temp3.validRoom(room) && !room.equalsIgnoreCase("lunchroom") && !room.equalsIgnoreCase("center"))
+        while(!temp3.validRoom(room) && !room.equalsIgnoreCase("lunchroom"))
         {
             System.out.println("Must be a vaild room. (FloorSideNumber)");
             room = s.nextLine();
+        }
+        if(temp3.getFloor() == 5 && temp3.getSide().equalsIgnoreCase("c"))
+        {
+            System.out.println("You are already in the library...");
+            System.exit(0);
         }
         Room r = new Room(temp3.getFloor(), temp3.getSide(), temp3.getNumber());
         if(room.equalsIgnoreCase("lunchroom"))
@@ -84,13 +91,10 @@ public class Main
                 System.out.println("Please enter either NW, CW, SW, C, NE, CE, or SE");
                 room = s.nextLine();
             }
+            r.setFloor(7);
+            r.setSide(room);
         }
-        else if(room.equalsIgnoreCase("center"))
-        {
-            System.out.println("Which floor?");
-            
-        }
-
+        System.out.println(r.timeToLibraryLine() + " seconds");
 
 
         s.close();

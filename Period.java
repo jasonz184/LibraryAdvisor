@@ -30,7 +30,8 @@ public class Period
 
     public String toString()
     {
-        return period + " " + start + " " + end;
+        if(period > 9) return period + "      " + start + "      " + end;
+        return period + "       " + start + "      " + end;
     }
 
     public int getPeriod()
