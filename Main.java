@@ -9,7 +9,7 @@ public class Main
         String room;
         String timeLeft;
         Scanner s = new Scanner(System.in);
-        ArrayList<Period> periods = new ArrayList<Period>();
+        ArrayList<Period> periods = new ArrayList<>();
         periods.add(new Period(1, "08:05", "08:46"));
         periods.add(new Period(2, "08:50", "09:31"));
         periods.add(new Period(3, "09:35", "10:19"));
@@ -26,9 +26,9 @@ public class Main
         for(Period p : periods) System.out.println(p);
         System.out.println("What period are you planning to go to the library? Periods 1 - 10");
         period = s.nextLine();
-        while(!temp.vaildPeriod(period))
+        while(!temp.validPeriod(period))
         {
-            System.out.println("Enter a vaild period. (1 - 10)");
+            System.out.println("Enter a valid period. (1 - 10)");
             period = s.nextLine();
         }
         if(period.compareTo("3") == 0)
@@ -36,18 +36,17 @@ public class Main
             System.out.println("The library is always closed.");
             System.exit(0);
         }
-        Period p = new Period(temp.getPeriod());       //Makes a period class with a vaild period number
+        Period p = new Period(temp.getPeriod());       //Makes a period class with a valid period number
         
         Time temp2 = new Time(0, 0);
         System.out.println("What time are you leaving? Enter in the following format with no spaces: HH:MM");
         timeLeft = s.nextLine();
-        while(!temp2.vaildTime(timeLeft))
+        while(!temp2.validTime(timeLeft))
         {
             System.out.println("Enter a valid time. (HH:MM)");
             timeLeft = s.nextLine();
         }
-        Time leave = new Time(temp2.getHour(), temp2.getMinute());       //Create class that has vaild time
-        boolean isPm = false;
+        Time leave = new Time(temp2.getHour(), temp2.getMinute());       //Create class that has valid time
         if(leave.getHour() > 0 && leave.getHour() < 12)   //Am or pm check for input that doesn't look like military time
         {
             System.out.println("AM or PM");
@@ -59,11 +58,10 @@ public class Main
             }
             if(input.equalsIgnoreCase("pm"))
             {
-                isPm = true;
                 leave.setHour(leave.getHour() + 12);
             }
         }
-        if(!leave.reasonableLeaveTime(periods, leave.getHour(), leave.getMinute(), p.getPeriod(), isPm))
+        if(!leave.reasonableLeaveTime(periods, leave.getHour(), leave.getMinute(), p.getPeriod()))
         {
             System.exit(0);
         }
@@ -73,7 +71,7 @@ public class Main
         room = s.nextLine();
         while(!temp3.validRoom(room) && !room.equalsIgnoreCase("lunchroom"))
         {
-            System.out.println("Must be a vaild room. (FloorSideNumber)");
+            System.out.println("Must be a valid room. (FloorSideNumber)");
             room = s.nextLine();
         }
         if(temp3.getFloor() == 5 && temp3.getSide().equalsIgnoreCase("c"))
@@ -95,7 +93,7 @@ public class Main
             r.setSide(room);
         }
         System.out.println(r.timeToLibraryLine() + " seconds");
-
+        
 
         s.close();
     }

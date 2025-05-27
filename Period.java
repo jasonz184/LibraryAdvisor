@@ -16,7 +16,7 @@ public class Period
         period = p;
     }
 
-    public boolean vaildPeriod(String p)
+    public boolean validPeriod(String p)
     {
         int num;
         try {

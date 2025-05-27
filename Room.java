@@ -19,8 +19,8 @@ public class Room
         String end = r.substring(2);
         int fl;
         int num;
-        boolean vaildSide = false;
-        boolean vaildNum = false;
+        boolean validSide = false;
+        boolean validNum = false;
         if(first.equalsIgnoreCase("b") && second.equalsIgnoreCase("c")) return false;
         if(first.equalsIgnoreCase("b"))
         {
@@ -35,23 +35,23 @@ public class Room
         }
         if(second.equalsIgnoreCase("n") || second.equalsIgnoreCase("c"))
         {
-            vaildSide = true;
-            vaildNum = num >= 1 && num <= 8;
+            validSide = true;
+            validNum = num >= 1 && num <= 8;
         }
         else if(second.equalsIgnoreCase("e") || second.equalsIgnoreCase("w"))
         {
-            vaildSide = true;
-            vaildNum = num >= 1 && num <= 26;
+            validSide = true;
+            validNum = num >= 1 && num <= 26;
         }
         else if(second.equalsIgnoreCase("s"))
         {
-            vaildSide = true;
-            vaildNum = num >= 1 && num <= 13;
+            validSide = true;
+            validNum = num >= 1 && num <= 13;
         }
         floor = fl;
         side = second;
         number = num; 
-        return fl >= 0 && fl <= 9 && vaildSide && vaildNum;
+        return fl >= 0 && fl <= 9 && validSide && validNum;
     }
 
     public int timeToLibraryLine()
@@ -59,15 +59,15 @@ public class Room
         int time = 0;
         time += timeToStairs();
         int floorDistance = floor - 5;
-        if(floorDistance < 0) time += Math.abs(floorDistance) * 20;     //time to go up stairs
-        else time += floorDistance * 10;                                //time to go down stairs
+        if(floorDistance < 0) time += Math.abs(floorDistance) * 20;     //time to go upstairs
+        else time += floorDistance * 10;                                //time to go downstairs
         if(!validRoom(7 + side + 1))            //if is lunchroom
         {
             time += timeToStairsLunch();
-            //time += 4;                          //to get to line after walking stairs
+            time += 4;                          //to get to line after walking stairs
             return time;
         }
-        //time += 4;                  //time it takes to walk in line after getting to the stairs E and F
+        time += 4;                  //time it takes to walk in line after getting to the stairs E and F
         return time;
     }
 
@@ -95,7 +95,7 @@ public class Room
         if(side.equalsIgnoreCase("c"))    //xc1 is closest to west     
         {
             timeToStairs += (number - 1) * 5;         //3 seconds to travel the length of a room??
-            timeToStairs += 5;                        //to get to closest staircase to library (E and F)
+            timeToStairs += 5;                        //to get to the closest staircase to library (E and F)
         }
         else if(side.equalsIgnoreCase("n"))
         {
@@ -126,7 +126,6 @@ public class Room
         return timeToStairs;
     }
 
-
     public void setFloor(int f)
     {
         floor = f;
@@ -147,11 +146,6 @@ public class Room
         return side;
     }
     
-    public void setNumber(int n)
-    {
-        number = n;
-    }
-
     public int getNumber()
     {
         return number;
