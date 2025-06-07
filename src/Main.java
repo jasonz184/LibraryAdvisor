@@ -1,9 +1,7 @@
 import java.util.ArrayList;
 
-public class Main
-{
-    public static void main(String[] args)
-    {
+public class Main {
+    public static void main(String[] args) {
         Library l = new Library();
         ArrayList<Period> periods = new ArrayList<>();
         periods.add(new Period(1, "08:05", "08:46"));
