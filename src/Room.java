@@ -61,9 +61,9 @@ public class Room
         if(floorDistance < 0) time += Math.abs(floorDistance) * 20;     //time to go upstairs
         else time += floorDistance * 15;                                //time to go downstairs
         if(floor == 7 && number == 0) time += timeToStairsLunch();
-        if(floor == 5) time += specialFifthFloorCase();
+        if(floor == 5 && side.equalsIgnoreCase("e")) time += specialFifthFloorCase();
         else time += timeToStairs(side);
-        time += 4;                  //time it takes to walk in line after getting to the stairs E and F
+        time += 3;                  //time it takes to walk in line after getting to the stairs E and F
         return time;
     }
 
@@ -72,15 +72,15 @@ public class Room
         int timeToStairs = 0;
         if(side.equalsIgnoreCase("nw") || side.equalsIgnoreCase("sw") || side.equalsIgnoreCase("c"))
         {
-            timeToStairs += 20;
+            timeToStairs += 45;
         }
         else if(side.equalsIgnoreCase("ne") || side.equalsIgnoreCase("ce") || side.equalsIgnoreCase("se"))
         {
-            timeToStairs += 35;
+            timeToStairs += 70;
         }
-        else if(side.equalsIgnoreCase("cw"))
+        else if(side.equalsIgnoreCase("cw"))        //stairs E and F closest to the cw area
         {
-            timeToStairs += 12;
+            timeToStairs += 35;
         }
         return timeToStairs;
     }
@@ -125,8 +125,8 @@ public class Room
     public int specialFifthFloorCase()
     {
         int timeToStairs = 0;
-        timeToStairs += (number - 1) * 3;
-        timeToStairs += timeToStairs("s");
+        timeToStairs += (number - 1) * 3;           //traveling along the east side, going towards south
+        timeToStairs += timeToStairs("s");      //go all the way to the south side
         return timeToStairs;
     }
 

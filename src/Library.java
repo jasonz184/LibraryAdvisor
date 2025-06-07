@@ -26,6 +26,7 @@ public class Library implements ActionListener
     JLabel extraLine = new JLabel();
     JLabel imageHolder = new JLabel();
     JLabel peopleInRoom = new JLabel();
+    JLabel feedback = new JLabel();
     JTextField input = new JTextField();
     JButton start = new JButton("Start");
     JButton home = new JButton("Home");
@@ -90,9 +91,14 @@ public class Library implements ActionListener
         imageHolder.setBounds(400, 100, 650, 400);
 
         peopleInRoom.setVisible(false);
-        peopleInRoom.setFont(new Font("Consolas", Font.PLAIN, 30));
-        peopleInRoom.setBounds(300, 400, 1600, 100);
+        peopleInRoom.setFont(new Font("Consolas", Font.PLAIN, 35));
+        peopleInRoom.setBounds(450, 400, 1600, 100);
 
+        feedback.setVisible(false);
+        feedback.setFont(new Font("Consolas", Font.PLAIN, 35));
+        feedback.setBounds(450, 300, 1600, 100);
+
+        frame.add(feedback);
         frame.add(peopleInRoom);
         frame.add(closed);
         frame.add(imageHolder);
@@ -147,6 +153,22 @@ public class Library implements ActionListener
             currentPeople += (int)(Math.random() * 3) + 1;
             if(currentPeople >= 100) currentPeople = 100;
             peopleInRoom.setText("People in the library: " + currentPeople + "/100");
+            if(currentPeople <= 25)
+            {
+                feedback.setText("Chances are pretty high");
+            }
+            else if(currentPeople <= 50)
+            {
+                feedback.setText("Chances are moderately high");
+            }
+            else if(currentPeople <= 75)
+            {
+                feedback.setText("Chances are relatively low");
+            }
+            else
+            {
+                feedback.setText("Chances are low to none");
+            }
         }
         if(e.getSource() == input)
         {
@@ -295,11 +317,6 @@ public class Library implements ActionListener
         }
     }
 
-    public void setPeriods(ArrayList<Period> p)
-    {
-        periodList = p;
-    }
-
     public static void insertionSort(int[] elements)
     {
         for (int j = 1; j < elements.length; j++)
@@ -325,6 +342,11 @@ public class Library implements ActionListener
                 i--;
             }
         }
+    }
+
+    public void setPeriods(ArrayList<Period> p)
+    {
+        periodList = p;
     }
 
     public void showPeriods(ArrayList<Period> p)
@@ -395,9 +417,10 @@ public class Library implements ActionListener
     {
         input.setVisible(false);
         imageHolder.setVisible(false);
-        question.setBounds(150, 280, 1600, 100);
-        question.setFont(new Font("Consolas", Font.PLAIN, 27));
-        question.setText("It will take approximately " + r.timeToLibraryLine() / 60 + " minute(s) and " + r.timeToLibraryLine() % 60  + " second(s) to get to the library.");
         peopleInRoom.setVisible(true);
+        feedback.setVisible(true);
+        question.setBounds(20, 150, 1600, 100);
+        question.setFont(new Font("Consolas", Font.PLAIN, 34));
+        question.setText("It will take approximately " + r.timeToLibraryLine() / 60 + " minute(s) and " + r.timeToLibraryLine() % 60  + " second(s) to get to the library.");
     }
 }
