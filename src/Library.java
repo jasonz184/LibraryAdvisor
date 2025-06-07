@@ -4,15 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class Library implements ActionListener
-{
+public class Library implements ActionListener {
     private int inputStage = 0;
     private ArrayList<Period> periodList = new ArrayList<>();
     private final ArrayList<JLabel> periodLabels = new ArrayList<>();
     Period p = new Period(0);
     Time t = new Time(0, 0);
     Room r = new Room(0, null, 0);
-    int amountClose = (int)(Math.random() * 3) + 1;
+    int amountClose = (int) (Math.random() * 3) + 1;
     int[] numbers = new int[amountClose + 1];
     ArrayList<Integer> close = new ArrayList<>();
     private final Timer updateTimer;
@@ -32,8 +31,7 @@ public class Library implements ActionListener
     JButton home = new JButton("Home");
     ImageIcon map = new ImageIcon("src/BTHS Map.jpg");
 
-    public Library()
-    {
+    public Library() {
         updateTimer = new Timer(1000, this);
         updateTimer.start();
 
@@ -43,18 +41,16 @@ public class Library implements ActionListener
         prompt.setFont(new Font("Consolas", Font.PLAIN, 30));
         prompt.setBounds(490, 260, 1080, 100);
 
-        for(int i = 0; i < numbers.length - 1; i++)
-        {
-            numbers[i] = (int)(Math.random() * 10) + 1;
-            if(numbers[i] == 3)
-            {
+        for (int i = 0; i < numbers.length - 1; i++) {
+            numbers[i] = (int) (Math.random() * 10) + 1;
+            if (numbers[i] == 3) {
                 numbers[i] = 0;
                 i--;
             }
         }
         numbers[numbers.length - 1] = 3;
         insertionSort(numbers);
-        for(int i : numbers) close.add(i);
+        for (int i : numbers) close.add(i);
         remDupes(close);
         String s = close.toString();
         closed.setFont(new Font("Consolas", Font.PLAIN, 30));
@@ -79,7 +75,7 @@ public class Library implements ActionListener
 
         periodHeading.setVisible(false);
         periodHeading.setFont(new Font("Consolas", Font.PLAIN, 30));
-        periodHeading.setBounds(500,0,1080,100);
+        periodHeading.setBounds(500, 0, 1080, 100);
 
 
         question.setVisible(false);
@@ -119,8 +115,7 @@ public class Library implements ActionListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == start)
-        {
+        if (e.getSource() == start) {
             question.setVisible(true);
             heading.setVisible(false);
             prompt.setVisible(false);
@@ -129,16 +124,14 @@ public class Library implements ActionListener
             closed.setVisible(false);
             periodHeading.setVisible(true);
             showPeriods(periodList);
-            if(inputStage == -1)
-            {
+            if (inputStage == -1) {
                 question.setText("What period are you planning to go to the library?");
                 question.setBounds(300, 570, 1000, 100);
                 input.setBounds(300, 670, 1000, 100);
             }
             inputStage = 0;
         }
-        if(e.getSource() == home)
-        {
+        if (e.getSource() == home) {
             question.setVisible(false);
             extraLine.setVisible(false);
             heading.setVisible(true);
@@ -150,40 +143,28 @@ public class Library implements ActionListener
             closed.setVisible(true);
         }
         if (e.getSource() == updateTimer) {
-            currentPeople += (int)(Math.random() * 3) + 1;
-            if(currentPeople >= 100) currentPeople = 100;
+            currentPeople += (int) (Math.random() * 3) + 1;
+            if (currentPeople >= 100) currentPeople = 100;
             peopleInRoom.setText("People in the library: " + currentPeople + "/100");
-            if(currentPeople <= 25)
-            {
+            if (currentPeople <= 25) {
                 feedback.setText("Chances are pretty high");
-            }
-            else if(currentPeople <= 50)
-            {
+            } else if (currentPeople <= 50) {
                 feedback.setText("Chances are moderately high");
-            }
-            else if(currentPeople <= 75)
-            {
+            } else if (currentPeople <= 75) {
                 feedback.setText("Chances are relatively low");
-            }
-            else
-            {
+            } else {
                 feedback.setText("Chances are low to none");
             }
         }
-        if(e.getSource() == input)
-        {
+        if (e.getSource() == input) {
             String text = input.getText();
-            if(inputStage == 0)
-            {
-                if(!p.validPeriod(text))
-                {
+            if (inputStage == 0) {
+                if (!p.validPeriod(text)) {
                     question.setText("Enter a valid period.");
                     question.setFont(new Font("Consolas", Font.PLAIN, 40));
                     question.setBounds(500, 570, 500, 100);
                     input.setBounds(500, 670, 500, 100);
-                }
-                else
-                {
+                } else {
                     p.setPeriod(Integer.parseInt(text));
                     question.setText("What time are you leaving? Enter in the following format: HH:MM");
                     question.setFont(new Font("Consolas", Font.PLAIN, 30));
@@ -191,26 +172,19 @@ public class Library implements ActionListener
                     input.setBounds(250, 670, 1100, 100);
                     inputStage = 1;
                 }
-                if(close.contains(Integer.parseInt(text)))
-                {
+                if (close.contains(Integer.parseInt(text))) {
                     backToHome("The library is closed.", 525, 350);
                 }
-            }
-            else if(inputStage == 1)
-            {
-                if(!t.validTime(text))
-                {
+            } else if (inputStage == 1) {
+                if (!t.validTime(text)) {
                     question.setText("Enter a valid time. (HH:MM)");
                     question.setFont(new Font("Consolas", Font.PLAIN, 30));
                     question.setBounds(500, 570, 500, 100);
                     input.setBounds(500, 670, 500, 100);
-                }
-                else
-                {
+                } else {
                     t.setHour(Integer.parseInt(text.substring(0, 2)));
                     t.setMinute(Integer.parseInt(text.substring(3)));
-                    if(t.getHour() > 0 && t.getHour() < 12)
-                    {
+                    if (t.getHour() > 0 && t.getHour() < 12) {
                         inputStage = 2;
                         question.setText("Is that AM or PM?");
                         input.setText("");
@@ -218,63 +192,42 @@ public class Library implements ActionListener
                         question.setFont(new Font("Consolas", Font.PLAIN, 40));
                         input.setBounds(525, 670, 390, 100);
                         return;
-                    }
-                    else
-                    {
-                        if(!t.reasonableLeaveTime(periodList, t.getHour(), t.getMinute(), p.getPeriod()))
-                        {
+                    } else {
+                        if (!t.reasonableLeaveTime(periodList, t.getHour(), t.getMinute(), p.getPeriod())) {
                             reasonableTimeCheck();
-                        }
-                        else
-                        {
+                        } else {
                             moveToRoomCheck();
                         }
                     }
-                    if(t.getHour() == 0)
-                    {
+                    if (t.getHour() == 0) {
                         backToHome("School isn't even open yet...", 475, 350);
                     }
                 }
-            }
-            else if(inputStage == 2)
-            {
-                if(text.equalsIgnoreCase("am") || text.equalsIgnoreCase("pm"))
-                {
-                    if(text.equalsIgnoreCase("pm"))
-                    {
+            } else if (inputStage == 2) {
+                if (text.equalsIgnoreCase("am") || text.equalsIgnoreCase("pm")) {
+                    if (text.equalsIgnoreCase("pm")) {
                         t.setHour(t.getHour() + 12);
                     }
-                }
-                else
-                {
+                } else {
                     question.setText("Enter AM or PM");
                     input.setText("");
                     return;
                 }
-                if(!t.reasonableLeaveTime(periodList, t.getHour(), t.getMinute(), p.getPeriod()))
-                {
+                if (!t.reasonableLeaveTime(periodList, t.getHour(), t.getMinute(), p.getPeriod())) {
                     reasonableTimeCheck();
-                }
-                else
-                {
+                } else {
                     moveToRoomCheck();
                 }
 
-            }
-            else if(inputStage == 3)
-            {
+            } else if (inputStage == 3) {
                 extraLine.setVisible(false);
-                if(!r.validRoom(text) && !text.equalsIgnoreCase("lunchroom"))
-                {
+                if (!r.validRoom(text) && !text.equalsIgnoreCase("lunchroom")) {
                     question.setFont(new Font("Consolas", Font.PLAIN, 35));
                     question.setText("Must be a valid room. (FloorSideNumber)");
                     question.setBounds(400, 570, 800, 100);
                     input.setBounds(400, 670, 780, 100);
-                }
-                else
-                {
-                    if(text.equalsIgnoreCase("lunchroom"))
-                    {
+                } else {
+                    if (text.equalsIgnoreCase("lunchroom")) {
                         extraLine.setVisible(true);
                         question.setText("Which side are you on? Enter one of the following:");
                         extraLine.setText("NW, CW, SW, C, NE, CE, SE");
@@ -286,28 +239,20 @@ public class Library implements ActionListener
                         input.setText("");
                         inputStage = 4;
                         return;
-                    }
-                    else
-                    {
+                    } else {
                         showEstimatedTime();
                     }
                 }
-                if(r.getFloor() == 5 && r.getSide().equalsIgnoreCase("c"))
-                {
+                if (r.getFloor() == 5 && r.getSide().equalsIgnoreCase("c")) {
                     backToHome("You are already in the library...", 450, 350);
                 }
-            }
-            else if(inputStage == 4)
-            {
+            } else if (inputStage == 4) {
                 extraLine.setVisible(false);
-                if(!text.equalsIgnoreCase("nw") && !text.equalsIgnoreCase("cw") && !text.equalsIgnoreCase("sw") && !text.equalsIgnoreCase("c") && !text.equalsIgnoreCase("ne") && !text.equalsIgnoreCase("ce") &&!text.equalsIgnoreCase("se"))
-                {
+                if (!text.equalsIgnoreCase("nw") && !text.equalsIgnoreCase("cw") && !text.equalsIgnoreCase("sw") && !text.equalsIgnoreCase("c") && !text.equalsIgnoreCase("ne") && !text.equalsIgnoreCase("ce") && !text.equalsIgnoreCase("se")) {
                     question.setFont(new Font("Consolas", Font.PLAIN, 35));
                     input.setBounds(300, 670, 950, 100);
                     question.setText("Please enter either NW, CW, SW, C, NE, CE, or SE");
-                }
-                else
-                {
+                } else {
                     r.setFloor(7);
                     r.setSide(text);
                     showEstimatedTime();
@@ -317,14 +262,11 @@ public class Library implements ActionListener
         }
     }
 
-    public static void insertionSort(int[] elements)
-    {
-        for (int j = 1; j < elements.length; j++)
-        {
+    public static void insertionSort(int[] elements) {
+        for (int j = 1; j < elements.length; j++) {
             int temp = elements[j];
             int possibleIndex = j;
-            while (possibleIndex > 0 && temp < elements[possibleIndex - 1])
-            {
+            while (possibleIndex > 0 && temp < elements[possibleIndex - 1]) {
                 elements[possibleIndex] = elements[possibleIndex - 1];
                 possibleIndex--;
             }
@@ -332,27 +274,21 @@ public class Library implements ActionListener
         }
     }
 
-    public void remDupes(ArrayList<Integer> numbs)
-    {
-        for(int i = 0; i < numbs.size() - 1; i++)
-        {
-            if(numbs.get(i).equals(numbs.get(i + 1)))
-            {
+    public void remDupes(ArrayList<Integer> numbs) {
+        for (int i = 0; i < numbs.size() - 1; i++) {
+            if (numbs.get(i).equals(numbs.get(i + 1))) {
                 numbs.remove(i);
                 i--;
             }
         }
     }
 
-    public void setPeriods(ArrayList<Period> p)
-    {
+    public void setPeriods(ArrayList<Period> p) {
         periodList = p;
     }
 
-    public void showPeriods(ArrayList<Period> p)
-    {
-        for(int i = 0; i < p.size(); i++)
-        {
+    public void showPeriods(ArrayList<Period> p) {
+        for (int i = 0; i < p.size(); i++) {
             JLabel l = new JLabel();
             Period p2 = p.get(i);
             l.setText(p2.toString());
@@ -363,17 +299,14 @@ public class Library implements ActionListener
         }
     }
 
-    public void hidePeriods()
-    {
-        for(JLabel j : periodLabels)
-        {
+    public void hidePeriods() {
+        for (JLabel j : periodLabels) {
             frame.remove(j);
         }
         periodHeading.setVisible(false);
     }
 
-    public void backToHome(String response, int qx, int qy)
-    {
+    public void backToHome(String response, int qx, int qy) {
         hidePeriods();
         extraLine.setVisible(false);
         home.setVisible(true);
@@ -384,8 +317,7 @@ public class Library implements ActionListener
         inputStage = -1;
     }
 
-    public void moveToRoomCheck()
-    {
+    public void moveToRoomCheck() {
         imageHolder.setVisible(true);
         hidePeriods();
         extraLine.setVisible(true);
@@ -399,28 +331,23 @@ public class Library implements ActionListener
         inputStage = 3;
     }
 
-    public void reasonableTimeCheck()
-    {
+    public void reasonableTimeCheck() {
         String feedback = t.leaveTimeFeedback(periodList, t.getHour(), t.getMinute(), p.getPeriod());
         hidePeriods();
-        if(feedback.length() < 30)
-        {
+        if (feedback.length() < 30) {
             backToHome(feedback, 900 - feedback.length() * 15, 350);
-        }
-        else
-        {
+        } else {
             backToHome(feedback, 1000 - feedback.length() * 14, 350);
         }
     }
 
-    public void showEstimatedTime()
-    {
+    public void showEstimatedTime() {
         input.setVisible(false);
         imageHolder.setVisible(false);
         peopleInRoom.setVisible(true);
         feedback.setVisible(true);
         question.setBounds(20, 150, 1600, 100);
         question.setFont(new Font("Consolas", Font.PLAIN, 34));
-        question.setText("It will take approximately " + r.timeToLibraryLine() / 60 + " minute(s) and " + r.timeToLibraryLine() % 60  + " second(s) to get to the library.");
+        question.setText("It will take approximately " + r.timeToLibraryLine() / 60 + " minute(s) and " + r.timeToLibraryLine() % 60 + " second(s) to get to the library.");
     }
 }

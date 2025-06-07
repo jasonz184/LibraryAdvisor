@@ -1,23 +1,19 @@
-public class Period
-{
+public class Period {
     private int period;
     private String start;
     private String end;
 
-    public Period(int p, String s, String e)
-    {
+    public Period(int p, String s, String e) {
         period = p;
         start = s;
         end = e;
     }
 
-    public Period(int p)
-    {
+    public Period(int p) {
         period = p;
     }
 
-    public boolean validPeriod(String p)
-    {
+    public boolean validPeriod(String p) {
         int num;
         try {
             num = Integer.parseInt(p);
@@ -28,29 +24,24 @@ public class Period
         return num >= 1 && num <= 10;
     }
 
-    public String toString()
-    {
-        if(period > 9) return period + "      " + start + "      " + end;
+    public String toString() {
+        if (period > 9) return period + "      " + start + "      " + end;
         return period + "       " + start + "      " + end;
     }
 
-    public void setPeriod(int p)
-    {
+    public void setPeriod(int p) {
         period = p;
     }
 
-    public int getPeriod()
-    {
+    public int getPeriod() {
         return period;
     }
 
-    public String getStart()
-    {
+    public String getStart() {
         return start;
     }
 
-    public String getEnd()
-    {
+    public String getEnd() {
         return end;
     }
 }
